@@ -1,6 +1,6 @@
 ﻿namespace Azimuth.GameObjects
 {
-	public static class GameObjectManger
+	public static class GameObjectManager
 	{
 		private static List<GameObject> gameObjects = new List<GameObject>();
 
