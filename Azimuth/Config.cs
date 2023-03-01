@@ -26,6 +26,8 @@ namespace Azimuth
 				return default;
 			}
 
+		#region Convertions
+
 			Type valueType = typeof(VALUE);
 
 			// if VALUE a Vector2
@@ -76,6 +78,8 @@ namespace Azimuth
 				// Attempt to get the string value from the config, then try to change it to the correct type
 				return (VALUE) Convert.ChangeType(instance.strings[_category][_key], valueType);
 			}
+
+		#endregion
 
 			Console.WriteLine($"[ERROR] Attempted to get config value for type '{valueType}' with key '{_key}' in '{_category}'.");
 
@@ -233,7 +237,5 @@ namespace Azimuth
 			if(!_values.ContainsKey(_category))
 				_values.Add(_category, new Dictionary<string, VALUE_TYPE>());
 		}
-		
-		
 	}
 }
