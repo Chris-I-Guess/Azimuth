@@ -12,21 +12,18 @@ namespace Azimuth_Test
 	{
 
 		private ImageWidget image;
+		private Button button;
 		public override void Load()
 		{
+			button = new Button(new Vector2(300, 300), new Vector2(150,75), Button.RenderSettings.normal);
+			UIManager.Add(button);
+			button.SetDrawLayer(1);
 			image = new ImageWidget(Vector2.Zero, new(800, 800), "texture");
+			UIManager.Add(image);
+			image.SetDrawLayer(0);
 		}
 
-		public override void Draw()
-		{
-			image.Draw();
-		}
-
-		public override void Update(float _deltaTime)
-		{
-			image.Update(Raylib.GetMousePosition());
-		}
-
+		
 		public override void Unload()
 		{
 			
