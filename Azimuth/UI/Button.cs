@@ -6,10 +6,17 @@ namespace Azimuth.UI
 {
 	public class Button : InteractableWidget
 	{
+		public delegate void OnClickEvent();
 		public class RenderSettings
 		{
-			public static RenderSettings normal = new RenderSettings();
-			
+			public RenderSettings(string _text, int _fontSize, string? _fontId, Color _textColor) : base()
+			{
+				text = _text;
+				fontSize = _fontSize;
+				fontId = _fontId;
+				textColor = _textColor;
+			}
+
 			public ColorBlock colors = new ColorBlock()
 			{
 				disabled = new Color(255, 255, 255, 128),
@@ -17,15 +24,17 @@ namespace Azimuth.UI
 				normal = Color.LIGHTGRAY,
 				selected = Color.BLACK
 			};
-			
-			public string text = "WAAAA";
+
+			public string text;
+			public int fontSize;
+			public string? fontId;
+			public Color textColor;
 			public float roundedness = 0.1f;
-			public int fontSize = 20;
 			public float fontSpacing = 1f;
-			public string? fontId = null;
-			public Color textColor = Color.BLACK;
 		}
 
+		private OnClickEvent? onClick;
+		
 		private readonly float roundedness;
 
 		private readonly string text;
@@ -46,13 +55,36 @@ namespace Azimuth.UI
 
 			font = string.IsNullOrEmpty(_settings.fontId) ? Raylib.GetFontDefault() : Assets.Find<Font>(_settings.fontId);
 			textColor = _settings.textColor;
-			textSize = Raylib.MeasureTextEx(font, text, fontSize, fontSpacing) * 0.5f;
+			textSize = Raylib.MeasureTextEx(font, text, fontSize, fontSpacing);
 		}
 
+		public void AddListener(OnClickEvent _event)
+		{
+			if(onClick == null)
+			{
+				onClick = _event;
+			}
+			else
+			{
+				onClick += _event;
+			}
+		}
+		
+		public void RemoveListener(OnClickEvent _event)
+		{
+			if(onClick != null)
+			{
+				onClick -= _event;
+			}
+		}
+		
 		public override void Draw()
 		{
 			Raylib.DrawRectangleRounded(Bounds, roundedness, 5, ColorFromState());
-			Raylib.DrawTextPro(font, text, position + textSize, Vector2.Zero, 0f, fontSize, fontSpacing, textColor);
+			
+			Vector2 textPosition = new(position.X + (size.X * 0.5f), position.Y + (size.Y * 0.5f));
+			
+			Raylib.DrawTextPro(font, text, textPosition, new Vector2 (textSize.X * 0.5f, textSize.Y * 0.5f), 0f, fontSize, fontSpacing, textColor);
 		}
 
 		protected override void OnStateChange(InteractionState _state, InteractionState _oldState)
@@ -60,6 +92,7 @@ namespace Azimuth.UI
 			if(_state != InteractionState.Selected && _oldState == InteractionState.Selected)
 			{
 				// The button is no longer being clicked, so do the event.
+				onClick?.Invoke();
 			}
 		}
 	}

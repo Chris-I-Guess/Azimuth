@@ -7,6 +7,8 @@ namespace Azimuth.UI
 	public abstract class Widget : IComparable<Widget>
 	{
 		public Rectangle Bounds => new Rectangle(position.X, position.Y, size.X, size.Y);
+	
+
 
 		public Vector2 position;
 		public Vector2 size;
