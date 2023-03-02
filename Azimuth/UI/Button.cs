@@ -53,7 +53,7 @@ namespace Azimuth.UI
 			fontSize = _settings.fontSize;
 			fontSpacing = _settings.fontSpacing;
 
-			font = string.IsNullOrEmpty(_settings.fontId) ? Raylib.GetFontDefault() : Assets.Find<Font>(_settings.fontId);
+			font = string.IsNullOrEmpty(_settings.fontId) ? Raylib.GetFontDefault() : Assets.Find<Font>("Fonts/" + _settings.fontId);
 			textColor = _settings.textColor;
 			textSize = Raylib.MeasureTextEx(font, text, fontSize, fontSpacing);
 		}
