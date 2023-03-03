@@ -4,7 +4,7 @@
 	{
 		private static List<GameObject> gameObjects = new List<GameObject>();
 
-		public static void Spawn(GameObject _gameObject)
+		public static void Add(GameObject _gameObject)
 		{
 			if(!gameObjects.Contains(_gameObject))
 			{
@@ -13,7 +13,7 @@
 			}
 		}
 
-		public static void Destroy(GameObject _gameObject)
+		public static void Remove(GameObject _gameObject)
 		{
 			if(gameObjects.Contains(_gameObject))
 			{
@@ -21,6 +21,15 @@
 				gameObjects.Remove(_gameObject);
 			}
 		}
+
+		public static void Clear()
+		{
+			while(gameObjects.Count > 0)
+			{
+				Remove(gameObjects[0]);
+			}
+		}
+		
 
 		public static void Update(float _deltaTime)
 		{

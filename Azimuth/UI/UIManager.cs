@@ -19,6 +19,14 @@ namespace Azimuth.UI
 				widgets.Remove(_widget);
 		}
 
+		public static void Clear()
+		{
+			while(widgets.Count > 0)
+			{
+				Remove(widgets[0]);
+			}
+		}
+
 		internal static void Update()
 		{
 			widgets.Sort();

@@ -8,8 +8,6 @@ namespace Azimuth.UI
 	{
 		public Rectangle Bounds => new Rectangle(position.X, position.Y, size.X, size.Y);
 	
-
-
 		public Vector2 position;
 		public Vector2 size;
 		public bool focused;

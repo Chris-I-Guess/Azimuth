@@ -4,14 +4,13 @@ using System.Numerics;
 
 namespace Azimuth.UI
 {
-	public class Button : InteractableWidget
+	public class ButtonWidget : InteractableWidget
 	{
 		public delegate void OnClickEvent();
 		public class RenderSettings
 		{
-			public RenderSettings(string _text, int _fontSize, string? _fontId, Color _textColor) : base()
+			public RenderSettings( int _fontSize, string? _fontId, Color _textColor) : base()
 			{
-				text = _text;
 				fontSize = _fontSize;
 				fontId = _fontId;
 				textColor = _textColor;
@@ -20,12 +19,11 @@ namespace Azimuth.UI
 			public ColorBlock colors = new ColorBlock()
 			{
 				disabled = new Color(255, 255, 255, 128),
-				hovered = Color.DARKGRAY,
-				normal = Color.LIGHTGRAY,
+				hovered = Color.LIGHTGRAY,
+				normal = Color.DARKGRAY,
 				selected = Color.BLACK
 			};
-
-			public string text;
+			
 			public int fontSize;
 			public string? fontId;
 			public Color textColor;
@@ -45,11 +43,11 @@ namespace Azimuth.UI
 		private readonly Color textColor;
 		private readonly Vector2 textSize;
 
-		public Button(Vector2 _position, Vector2 _size, RenderSettings _settings) : base(_position, _size, _settings.colors)
+		public ButtonWidget(Vector2 _position, Vector2 _size, string _text, RenderSettings _settings) : base(_position, _size, _settings.colors)
 		{
 			roundedness = _settings.roundedness;
 
-			text = _settings.text;
+			text = _text;
 			fontSize = _settings.fontSize;
 			fontSpacing = _settings.fontSpacing;
 
