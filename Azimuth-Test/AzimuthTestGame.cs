@@ -16,6 +16,8 @@ namespace Azimuth_Test
 		private ButtonWidget buttonWidget;
 		private TextWidget text;
 		private AnimatedGameObject dino;
+
+		private SingleSpriteGameObject dinoButStill;
 		
 		private void OnClickButton()
 		{
@@ -38,6 +40,9 @@ namespace Azimuth_Test
 
 			dino = new AnimatedGameObject(new(100, 300), "run", 2, 0.1f, 1);
 			GameObjectManager.Add(dino);
+
+			dinoButStill = new(new(100, 400), "run", 1);
+			GameObjectManager.Add(dinoButStill);
 			
 			buttonWidget.AddListener(OnClickButton);
 			buttonWidget.AddListener(() =>

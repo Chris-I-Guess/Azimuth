@@ -31,13 +31,13 @@
 		}
 		
 
-		public static void Update(float _deltaTime)
+		internal static void Update(float _deltaTime)
 		{
 			foreach(GameObject gameObject in gameObjects)
 				gameObject.Update(_deltaTime);
 		}
 
-		public static void Draw()
+		internal static void Draw()
 		{
 			foreach(GameObject gameObject in gameObjects)
 				gameObject.Draw();
