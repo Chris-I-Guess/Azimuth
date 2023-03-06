@@ -17,7 +17,9 @@ namespace Azimuth_Test
 		private TextWidget text;
 		private AnimatedGameObject dino;
 
-		private SingleSpriteGameObject dinoButStill;
+		private AnimatedGameObject dinoButStill;
+
+		private AnimatedGameObject testdinomulti;
 		
 		private void OnClickButton()
 		{
@@ -40,6 +42,15 @@ namespace Azimuth_Test
 
 			dino = new AnimatedGameObject(new(100, 300), "run", 2, 0.1f, 1);
 			GameObjectManager.Add(dino);
+
+			testdinomulti = new()
+			dino.AddSprite("run", new(new(500, 300), "run", 2, 0.1f, 1));
+			dino.AddSprite("idle", new(new(500, 300), "idle", 2, 0.1f, 1));
+			GameObjectManager.Add(dino.CallSprite("run"));
+
+			
+			
+			
 
 			dinoButStill = new(new(100, 400), "run", 1);
 			GameObjectManager.Add(dinoButStill);
@@ -71,6 +82,18 @@ namespace Azimuth_Test
 		public override void Update(float _deltaTime)
 		{
 			Raylib.DrawText(_deltaTime.ToString(), 0, 20, 30, Color.BEIGE);
+			
+			if(Raylib.IsKeyPressed(KeyboardKey.KEY_A))
+			{
+				GameObjectManager.Remove(dino.CallSprite("run"));
+				GameObjectManager.Add(dino.CallSprite("idle"));
+			}
+			if(Raylib.IsKeyPressed(KeyboardKey.KEY_S))
+			{
+				GameObjectManager.Remove(dino.CallSprite("idle"));
+				GameObjectManager.Add(dino.CallSprite("run"));
+			}
+			
 		}
 	}
 }

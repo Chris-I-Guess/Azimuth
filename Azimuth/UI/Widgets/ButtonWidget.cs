@@ -9,7 +9,7 @@ namespace Azimuth.UI
 		public delegate void OnClickEvent();
 		public class RenderSettings
 		{
-			public RenderSettings( int _fontSize, string? _fontId, Color _textColor) : base()
+			public RenderSettings( int _fontSize, string? _fontId, Color _textColor) 
 			{
 				fontSize = _fontSize;
 				fontId = _fontId;
