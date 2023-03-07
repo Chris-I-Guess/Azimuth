@@ -6,69 +6,90 @@ namespace Azimuth.GameObjects
 {
 	public class AnimatedGameObject : GameObject
 	{
+		private const float EPSILON = 0.0001f;
+		
+		private float animateSpeed;
+		private readonly int sizeMulti;
+		private int spriteAmount;
+		public Vector2 Size { get; private set; }
+
 		private readonly Texture2D image;
 
-		private Rectangle display;
-
-		private float texturePosX = 0f;
-		public Vector2 Size { get; private set; }
+		private Rectangle source;
+		private Rectangle textureRec;
 		
-		private readonly Vector2 textureSize;
-
-		private const float EPSILON = 0.0001f;
-
-		private readonly float animateSpeed;
-
-		
-		private Dictionary<string, AnimatedGameObject> sprites = new Dictionary<string, AnimatedGameObject>();
-
-
-
-		/// <summary>
-		/// adds sprite to Dictionary only use when needing multiple spite animations for the same sprite
-		/// </summary>
-		public void AddSprite(string _id, AnimatedGameObject _animatedGameObject) => sprites.Add(_id, _animatedGameObject);
+		private readonly Dictionary<string, Rectangle> locations = new();
 		
 		/// <summary>
-		/// put into the GameObjectManager.Add(CallSprite(_id))
+		/// To put Id to a rectangle to make less messy when changing between spriteAnimation
 		/// </summary>
-		public AnimatedGameObject CallSprite(string _id) => sprites[_id];
+		public void AddRectangle(string _id, Rectangle _rectangle) => locations.Add(_id, _rectangle);
 		
+		/// <summary>
+		/// Be able to call the Rectangle that you made in AddRectangle()
+		/// </summary>
+		public Rectangle CallRectangle(string _id) => locations[_id];
 
-
-		public AnimatedGameObject(Vector2 _position, string _imageId, int _spriteAmount, float _animateSpeed, int _sizeMulti)
+		public AnimatedGameObject(Rectangle? _source, Vector2 _position, string _imageId, int _spriteAmount, float _animateSpeed, int _sizeMulti)
 		{
 			image = Assets.Find<Texture2D>($"Textures/{_imageId}");
+			
 			position = _position;
-			
 			animateSpeed = _animateSpeed;
-
-			Size = new((image.width * _sizeMulti) / _spriteAmount, image.height * _sizeMulti);
+			sizeMulti = _sizeMulti;
+			spriteAmount = _spriteAmount;
 			
-			textureSize = new(image.width / _spriteAmount, image.height);
+			source = _source ?? new Rectangle(0, 0, image.width, image.height);
+			UpdateMath();
 		}
+		/// <summary>
+		/// This is only works with sprite sheets
+		/// </summary>
+		public void ChangeAnimation(Rectangle? _source, int? _spriteAmount, float? _animateSpeed)
+		{
+			source = _source ?? source;
+			animateSpeed = _animateSpeed ?? animateSpeed;
+			spriteAmount = _spriteAmount ?? spriteAmount;
+			
+			UpdateMath();
+		}
+		
+		internal void UpdateMath()
+		{
+			textureRec = new Rectangle(source.x, source.y, source.width / spriteAmount, source.height);
+			Size = new Vector2((source.width * sizeMulti) / spriteAmount, source.height * sizeMulti);
+		}
+		
+		public bool CheckIfInAnimation(string _id)
+		{
+			Rectangle foo = CallRectangle(_id);
+			
+			return (int)source.x == (int)foo.x && (int)source.y == (int)foo.y;
+		}
+
+	#region Draw & Update Functions
 
 		public override void Draw()
 		{
-			display = new(texturePosX, 0, textureSize.X, textureSize.Y);
-
-			Raylib.DrawTexturePro(image, display, new Rectangle(position.X, position.Y, Size.X,Size.Y), Vector2.Zero, 0, Color.WHITE);
+			Raylib.DrawTexturePro(image,textureRec,new Rectangle(position.X, position.Y, Size.X,Size.Y), Vector2.Zero, 0, Color.WHITE);
 		}
-
 		
 		private float speedTemp;
 		
+
 		public override void Update(float _deltaTime)
 		{
 			speedTemp -= _deltaTime;
 			if(speedTemp < 0)
 			{
 				speedTemp = animateSpeed;
-				if(Math.Abs(texturePosX - (textureSize.X - image.width)) > EPSILON)
-					texturePosX += textureSize.X;
+				if(Math.Abs(textureRec.x - (source.width - textureRec.width)) > EPSILON)
+					textureRec.x += textureRec.width;
 				else
-					texturePosX = 0;
+					textureRec.x = source.x;
 			}
 		}
+
+	#endregion
 	}
 }

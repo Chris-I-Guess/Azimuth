@@ -4,7 +4,7 @@ namespace Azimuth.GameObjects
 {
 	public class GameObject
 	{
-		public Vector2 position;
+		public static Vector2 position;
 		public virtual void Load() { }
 
 		public virtual void Draw() { }

@@ -9,8 +9,6 @@ namespace Azimuth.GameObjects
 	{
 		public Vector2 Size { get; private set; }
 		private readonly Texture2D image;
-
-		
 		public SingleSpriteGameObject(Vector2 _position, string _imageId, int _sizeMulti)
 		{
 			position = _position;

@@ -4,7 +4,6 @@ using Azimuth.UI;
 
 using Raylib_cs;
 
-using System.Net.Mime;
 using System.Numerics;
 
 namespace Azimuth_Test
@@ -17,9 +16,7 @@ namespace Azimuth_Test
 		private TextWidget text;
 		private AnimatedGameObject dino;
 
-		private AnimatedGameObject dinoButStill;
-
-		private AnimatedGameObject testdinomulti;
+		
 		
 		private void OnClickButton()
 		{
@@ -40,20 +37,15 @@ namespace Azimuth_Test
 			text = new TextWidget(new(100, 100), "hello", 50, null, Color.BLACK);
 			UIManager.Add(text);
 
-			dino = new AnimatedGameObject(new(100, 300), "run", 2, 0.1f, 1);
+			
+			
+			dino = new AnimatedGameObject(new(0, 60, 176, 94), new(100, 300), "Dino", 2, 0.1f, 1);
 			GameObjectManager.Add(dino);
-
-			testdinomulti = new()
-			dino.AddSprite("run", new(new(500, 300), "run", 2, 0.1f, 1));
-			dino.AddSprite("idle", new(new(500, 300), "idle", 2, 0.1f, 1));
-			GameObjectManager.Add(dino.CallSprite("run"));
-
 			
-			
-			
+			dino.AddRectangle("run", new(0, 60, 176, 94));
+			dino.AddRectangle("idle", new Rectangle(0, 154, 176, 94));
+			dino.AddRectangle("duck", new Rectangle(0, 0, 236, 60));
 
-			dinoButStill = new(new(100, 400), "run", 1);
-			GameObjectManager.Add(dinoButStill);
 			
 			buttonWidget.AddListener(OnClickButton);
 			buttonWidget.AddListener(() =>
@@ -84,16 +76,14 @@ namespace Azimuth_Test
 			Raylib.DrawText(_deltaTime.ToString(), 0, 20, 30, Color.BEIGE);
 			
 			if(Raylib.IsKeyPressed(KeyboardKey.KEY_A))
-			{
-				GameObjectManager.Remove(dino.CallSprite("run"));
-				GameObjectManager.Add(dino.CallSprite("idle"));
-			}
-			if(Raylib.IsKeyPressed(KeyboardKey.KEY_S))
-			{
-				GameObjectManager.Remove(dino.CallSprite("idle"));
-				GameObjectManager.Add(dino.CallSprite("run"));
-			}
+				dino.ChangeAnimation(dino.CallRectangle("run"), null, null);
 			
+			if(Raylib.IsKeyPressed(KeyboardKey.KEY_S))
+				dino.ChangeAnimation(dino.CallRectangle("duck"), null, null);
+			
+			if(Raylib.IsKeyPressed(KeyboardKey.KEY_D))
+				dino.ChangeAnimation(dino.CallRectangle("idle"), null, null);
+
 		}
 	}
 }
