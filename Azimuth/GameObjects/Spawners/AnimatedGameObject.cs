@@ -47,7 +47,13 @@ namespace Azimuth.GameObjects
 		/// </summary>
 		public void ChangeAnimation(Rectangle? _source, int? _spriteAmount, float? _animateSpeed)
 		{
+			float height = source.height;
+
 			source = _source ?? source;
+			
+			position.Y = (position.Y + height) - source.height;
+			
+			
 			animateSpeed = _animateSpeed ?? animateSpeed;
 			spriteAmount = _spriteAmount ?? spriteAmount;
 			
@@ -56,6 +62,7 @@ namespace Azimuth.GameObjects
 		
 		internal void UpdateMath()
 		{
+			
 			textureRec = new Rectangle(source.x, source.y, source.width / spriteAmount, source.height);
 			Size = new Vector2((source.width * sizeMulti) / spriteAmount, source.height * sizeMulti);
 		}
