@@ -6,7 +6,7 @@ namespace Azimuth.UI
 {
 	public class TextWidget : Widget
 	{
-		private string text;
+		public string text;
 		
 		private string? fontId;
 		private Font font;
