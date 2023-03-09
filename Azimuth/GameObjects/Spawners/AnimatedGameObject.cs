@@ -1,17 +1,17 @@
-﻿using Raylib_cs;
+﻿using MathLib;
 
-using System.Numerics;
+using Raylib_cs;
 
 namespace Azimuth.GameObjects
 {
 	public class AnimatedGameObject : GameObject
 	{
-		private const float EPSILON = 0.0001f;
+		private const float EPSILON = float.Epsilon;
 		
 		private float animateSpeed;
 		private readonly int sizeMulti;
 		private int spriteAmount;
-		public Vector2 Size { get; private set; }
+		public Vec2 Size { get; private set; }
 
 		private readonly Texture2D image;
 
@@ -30,7 +30,7 @@ namespace Azimuth.GameObjects
 		/// </summary>
 		public Rectangle CallRectangle(string _id) => locations[_id];
 
-		public AnimatedGameObject(Rectangle? _source, Vector2 _position, string _imageId, int _spriteAmount, float _animateSpeed, int _sizeMulti)
+		public AnimatedGameObject(Rectangle? _source, Vec2 _position, string _imageId, int _spriteAmount, float _animateSpeed, int _sizeMulti)
 		{
 			image = Assets.Find<Texture2D>($"Textures/{_imageId}");
 			
@@ -51,8 +51,7 @@ namespace Azimuth.GameObjects
 
 			source = _source ?? source;
 			
-			position.Y = (position.Y + height) - source.height;
-			
+			position.y = (position.y + height) - source.height;
 			
 			animateSpeed = _animateSpeed ?? animateSpeed;
 			spriteAmount = _spriteAmount ?? spriteAmount;
@@ -62,9 +61,8 @@ namespace Azimuth.GameObjects
 		
 		internal void UpdateMath()
 		{
-			
 			textureRec = new Rectangle(source.x, source.y, source.width / spriteAmount, source.height);
-			Size = new Vector2((source.width * sizeMulti) / spriteAmount, source.height * sizeMulti);
+			Size = new Vec2((source.width * sizeMulti) / spriteAmount, source.height * sizeMulti);
 		}
 		
 		public bool CheckIfInAnimation(string _id)
@@ -78,7 +76,7 @@ namespace Azimuth.GameObjects
 
 		public override void Draw()
 		{
-			Raylib.DrawTexturePro(image,textureRec,new Rectangle(position.X, position.Y, Size.X,Size.Y), Vector2.Zero, 0, Color.WHITE);
+			Raylib.DrawTexturePro(image,textureRec,new Rectangle(position.x, position.y, Size.x,Size.y), Vec2.zero, 0, Color.WHITE);
 		}
 		
 		private float speedTemp;

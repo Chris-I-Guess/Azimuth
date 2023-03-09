@@ -1,16 +1,17 @@
-﻿using Raylib_cs;
+﻿using MathLib;
+
+using Raylib_cs;
 
 using System.Numerics;
-
 
 namespace Azimuth.GameObjects
 {
 	public class SingleSpriteGameObject : GameObject
 	{
-		public Vector2 Size { get; private set; }
+		public Vec2 Size { get; private set; }
 		private readonly Texture2D image;
 		
-		public SingleSpriteGameObject(Vector2 _position, string _imageId, int _sizeMulti)
+		public SingleSpriteGameObject(Vec2 _position, string _imageId, int _sizeMulti)
 		{
 			position = _position;
 			image = Assets.Find<Texture2D>($"Textures/{_imageId}");
@@ -18,7 +19,7 @@ namespace Azimuth.GameObjects
 		}
 		public override void Draw()
 		{
-			RaylibExt.DrawTexture(image, position.X, position.Y, Size.X, Size.Y, Color.WHITE); 
+			RaylibExt.DrawTexture(image, position.x, position.y, Size.x, Size.y, Color.WHITE); 
 		}
 	}
 }

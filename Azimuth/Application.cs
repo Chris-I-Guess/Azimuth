@@ -4,7 +4,6 @@ using Azimuth.UI;
 
 using Raylib_cs;
 
-using System.Runtime.Serialization.Formatters;
 
 namespace Azimuth
 {

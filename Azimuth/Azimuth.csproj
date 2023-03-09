@@ -19,4 +19,10 @@
     <PackageReference Include="Raylib-cs" Version="4.2.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="MathLib">
+      <HintPath>..\..\maths-for-games-Chris-I-Guess\Other\Builds\net6.0\MathLib.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

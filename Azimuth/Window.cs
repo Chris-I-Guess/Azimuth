@@ -16,8 +16,11 @@ namespace Azimuth
 			Width = Config.Get<int>("Window", "width");
 			Height = Config.Get<int>("Window", "height");
 			Title = Config.Get<string>("Application", "name")!;
-			fps = Config.Get<int>("Window", "fps");
 			ClearColor = Config.Get<Color>("Window", "clearColor");
+
+			fps = Config.Get<int>("Window", "fps");
+			
+			
 			
 			Raylib.SetExitKey((KeyboardKey)Config.Get<int>("Application", "quitKey"));
 			

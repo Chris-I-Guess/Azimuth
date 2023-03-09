@@ -1,4 +1,6 @@
-﻿using Raylib_cs;
+﻿using MathLib;
+
+using Raylib_cs;
 
 using System.Numerics;
 
@@ -6,18 +8,18 @@ namespace Azimuth.UI
 {
 	public class TextWidget : Widget
 	{
-		public string text;
+		private string text;
 		
 		private string? fontId;
 		private Font font;
 		
-		private Vector2 textSize;
+		private Vec2 textSize;
 		private Color textColor;
 		
 		private int fontSize;
 		private float fontSpacing = 1f;
 		
-		public TextWidget(Vector2 _position, string _text , int _fontSize, string? _fontId, Color _textColor) : base(_position, Vector2.Zero)
+		public TextWidget(Vec2 _position, string _text , int _fontSize, string? _fontId, Color _textColor) : base(_position, Vec2.zero)
 		{
 			text = _text;
 			fontSize = _fontSize;
@@ -29,12 +31,13 @@ namespace Azimuth.UI
 			textSize = Raylib.MeasureTextEx(font, text, fontSize, fontSpacing);
 			size = textSize;
 		}
+		public void UpdateText(string _text) => text = _text;
 		
 		public override void Draw()
 		{
-			Vector2 textPosition = new(position.X, position.Y);
+			Vec2 textPosition = new Vec2(position.x, position.y);
 			
-			Raylib.DrawTextPro(font, text, textPosition, new Vector2 (textSize.X * 0.5f, textSize.Y * 0.5f), 0f, fontSize, fontSpacing, textColor);
+			Raylib.DrawTextPro(font, text, textPosition, new Vec2 (textSize.x * 0.5f, textSize.y * 0.5f), 0f, fontSize, fontSpacing, textColor);
 		}
 	}
 }

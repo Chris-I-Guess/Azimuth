@@ -1,4 +1,6 @@
-﻿using Raylib_cs;
+﻿using MathLib;
+
+using Raylib_cs;
 
 using System.Numerics;
 
@@ -41,9 +43,9 @@ namespace Azimuth.UI
 
 		private readonly Font font;
 		private readonly Color textColor;
-		private readonly Vector2 textSize;
+		private readonly Vec2 textSize;
 
-		public ButtonWidget(Vector2 _position, Vector2 _size, string _text, RenderSettings _settings) : base(_position, _size, _settings.colors)
+		public ButtonWidget(Vec2 _position, Vec2 _size, string _text, RenderSettings _settings) : base(_position, _size, _settings.colors)
 		{
 			roundedness = _settings.roundedness;
 
@@ -80,9 +82,9 @@ namespace Azimuth.UI
 		{
 			Raylib.DrawRectangleRounded(Bounds, roundedness, 5, ColorFromState());
 			
-			Vector2 textPosition = new(position.X + (size.X * 0.5f), position.Y + (size.Y * 0.5f));
+			Vec2 textPosition = new(position.x + (size.x * 0.5f), position.y + (size.y * 0.5f));
 			
-			Raylib.DrawTextPro(font, text, textPosition, new Vector2 (textSize.X * 0.5f, textSize.Y * 0.5f), 0f, fontSize, fontSpacing, textColor);
+			Raylib.DrawTextPro(font, text, textPosition, new Vec2 (textSize.x * 0.5f, textSize.y * 0.5f), 0f, fontSize, fontSpacing, textColor);
 		}
 
 		protected override void OnStateChange(InteractionState _state, InteractionState _oldState)

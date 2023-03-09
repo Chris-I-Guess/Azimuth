@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿
+using MathLib;
 
 namespace Raylib_cs
 {
@@ -9,7 +10,7 @@ namespace Raylib_cs
         {
             Rectangle dst = new Rectangle(_xPos, _yPos, _width, _height);
             Rectangle src = new Rectangle(0, 0, _texture.width, _texture.height);
-            Vector2 origin = new Vector2(_xOrigin * _width, _yOrigin * _height);
+            Vec2 origin = new Vec2(_xOrigin * _width, _yOrigin * _height);
             Raylib.DrawTexturePro(_texture, src, dst, origin, _rotation, _color);
         }
     }

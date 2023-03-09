@@ -2,6 +2,8 @@
 using Azimuth.GameObjects;
 using Azimuth.UI;
 
+using MathLib;
+
 using Raylib_cs;
 
 using System.Numerics;
@@ -26,11 +28,11 @@ namespace Azimuth_Test
 		{
 			int counter = 0;
 			
-			buttonWidget = new ButtonWidget(new Vector2(300, 300), new Vector2(150,75),"hello" , new ButtonWidget.RenderSettings(50, null, Color.WHITE));
+			buttonWidget = new ButtonWidget(new Vec2(300, 300), new Vec2(150,75),"hello" , new ButtonWidget.RenderSettings(50, null, Color.WHITE));
 			UIManager.Add(buttonWidget);
 			buttonWidget.SetDrawLayer(1);
 			
-			image = new ImageWidget(Vector2.Zero, new(800, 800), "texture");
+			image = new ImageWidget(Vec2.zero, new(800, 800), "texture");
 			
 			image.SetDrawLayer(0);
 
